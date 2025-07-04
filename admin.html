@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Administration - Changer le mot de passe</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="admin-page">
+
+  <div class="admin-container reveal">
+    <h2 class="reveal">🔐 Changer le mot de passe d'accès</h2>
+    <form id="adminForm" class="reveal">
+      <input type="password" id="newPassword" placeholder="Nouveau mot de passe" required />
+      <button type="submit">✅ Enregistrer</button>
+      <p id="adminMessage"></p>
+    </form>
+  </div>
+
+  <button id="scrollTopBtn" title="Retour en haut">⬆</button>
+
+  <script src="script.js"></script>
+  <script>
+  document.getElementById("adminForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+    const newPassword = document.getElementById("newPassword").value.trim();
+    const message = document.getElementById("adminMessage");
+
+    if (newPassword.length < 4) {
+      message.textContent = "Le mot de passe doit contenir au moins 4 caractères.";
+      message.style.color = "red";
+      return;
+    }
+
+    try {
+      const response = await fetch("/.netlify/functions/updatePassword", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: newPassword })
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        message.textContent = "✅ " + data.message;
+        message.style.color = "green";
+      } else {
+        message.textContent = "❌ " + data.error;
+        message.style.color = "red";
+      }
+    } catch (err) {
+      message.textContent = "❌ Erreur réseau ou serveur.";
+      message.style.color = "red";
+    }
+  });
+</script>
+
+</body>
+</html>

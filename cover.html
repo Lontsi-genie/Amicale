@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accès à la galerie</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="cover-page">
+
+  <div class="cover-container reveal">
+    <img src="assets/logo.jpg" alt="Logo" class="cover-logo reveal" />
+    <h1 class="cover-title reveal">Bienvenue à l'Amicale des pionniers de l'Universite de Yaounde 2 SOA_93</h1>
+    <p class="cover-paragraph reveal">Revivez les plus beaux moments de la réunion </p>
+
+    <div class="password-box reveal">
+      <input type="password" id="passwordInput" placeholder="Entrez le mot de passe" />
+      <button onclick="checkPassword()">Accéder</button>
+      <p id="errorMessage"></p>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script>
+    // Déclencher les animations à l'ouverture
+    window.addEventListener("load", () => {
+      document.querySelectorAll('.reveal').forEach(el => {
+        el.classList.add('visible');
+      });
+    });
+
+    async function checkPassword() {
+      const input = document.getElementById("passwordInput").value.trim();
+      const correctPassword = await getPassword();
+      const error = document.getElementById("errorMessage");
+
+      if (input === correctPassword) {
+        window.location.href = "index.html";
+      } else {
+        error.textContent = "Mot de passe incorrect.";
+        error.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>
