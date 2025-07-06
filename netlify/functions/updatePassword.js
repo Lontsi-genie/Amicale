@@ -1,7 +1,11 @@
-const fs = require("fs");
-const path = require("path");
+// .netlify/functions/updatePassword.js
 
-exports.handler = async function(event, context) {
+const fetch = require("node-fetch");
+
+const BIN_ID = "TON_BIN_ID_JSONBIN"; // Remplace par ton ID
+const API_KEY = "TON_API_KEY_JSONBIN"; // Remplace par ta clé API
+
+exports.handler = async function (event, context) {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -15,23 +19,33 @@ exports.handler = async function(event, context) {
     if (!password || password.length < 4) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: "Mot de passe invalide" })
+        body: JSON.stringify({ error: "Mot de passe invalide." })
       };
     }
 
-    const filePath = path.join(__dirname, "../../password.json");
+    const updateResponse = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Master-Key": API_KEY,
+        "X-Bin-Private": "true"
+      },
+      body: JSON.stringify({ password })
+    });
 
-    fs.writeFileSync(filePath, JSON.stringify({ password }, null, 2), "utf8");
+    if (!updateResponse.ok) {
+      throw new Error("Échec de mise à jour");
+    }
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: "Mot de passe mis à jour avec succès !" })
+      body: JSON.stringify({ message: "Mot de passe mis à jour avec succès." })
     };
-
-  } catch (error) {
+  } catch (err) {
+    console.error("Erreur updatePassword.js :", err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Erreur serveur : " + error.message })
+      body: JSON.stringify({ error: "Erreur serveur." })
     };
   }
 };
