@@ -80,13 +80,36 @@ async function checkPassword() {
   const input = document.getElementById("password").value.trim();
   const error = document.getElementById("error-msg");
 
-  const res = await fetch("password.json");
-  const data = await res.json();
+  // Ajoutez la configuration pour JSONBin.io ici
+  const JSONBIN_URL_READ = "https://api.jsonbin.io/v3/b/686a9bbd8960c979a5b81842/latest"; // Utilisez /latest pour obtenir la dernière version
+  const JSONBIN_API_KEY = "$2a$10$N2Z/S6fvmG9oTVs0Wsi0g.qQhisn.z0y1RuepOk5nnM8YJKDy.Qrm";
 
-  if (input === data.password) {
-    window.location.href = "index.html";
-  } else {
-    error.textContent = "Mot de passe incorrect.";
+  try {
+    const response = await fetch(JSONBIN_URL_READ, {
+      method: "GET", // On utilise GET pour lire
+      headers: {
+        "X-Master-Key": JSONBIN_API_KEY,
+        "X-Bin-Meta": "false" // Pour récupérer seulement le contenu du bin, sans les métadonnées
+      }
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.password) { // Vérifiez que la réponse est OK et que 'password' existe dans les données
+      if (input === data.password) {
+        window.location.href = "index.html"; // ou whatever your main content page is
+      } else {
+        error.textContent = "Mot de passe incorrect.";
+        error.style.color = "red";
+      }
+    } else {
+      error.textContent = "Erreur lors de la récupération du mot de passe.";
+      error.style.color = "red";
+      console.error("Erreur JSONBin API:", data);
+    }
+  } catch (err) {
+    console.error("Erreur réseau ou API lors de la lecture:", err);
+    error.textContent = "Erreur réseau ou API.";
     error.style.color = "red";
   }
 }
