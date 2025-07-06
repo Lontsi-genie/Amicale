@@ -12,6 +12,9 @@ async function getPassword() {
       }
     });
 
+    if (!response.ok) throw new Error("Erreur de récupération du mot de passe.");
+
+
     const data = await response.json();
     return data.record.password;
   } catch (error) {
