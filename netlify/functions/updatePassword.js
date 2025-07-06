@@ -2,8 +2,8 @@
 
 const fetch = require("node-fetch");
 
-const BIN_ID = "686A5BBA8960C979A5B8018B"; // Remplace par ton ID
-const API_KEY = "$2a$10$1FmC391QqDBD0/g6KInxuMT1WapHd2XM1D2KAH8HOU6cDHL5h1ce"; // Remplace par ta clé API
+const BIN_ID = "686a9bbd8960c979a5b81842"; // C'est le NOUVEL ID du bin
+const API_KEY = "$2a$10$N2Z/S6fvmG9oTVs0Wsi0g.qQhisn.z0y1RuepOk5nnM8YJKDy.Qrm"; // Ta clé API Master
 
 exports.handler = async function (event, context) {
   if (event.httpMethod !== "POST") {

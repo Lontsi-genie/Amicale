@@ -1,8 +1,8 @@
 // config.js
 // Version avec JSONBin.io (accès dynamique)
 
-const JSONBIN_URL = "https://api.jsonbin.io/v3/b/686A5BBA8960C979A5B8018B/latest";
-const JSONBIN_API_KEY = "$2a$10$1FmC391QqDBD0/g6KInxuMT1WapHd2XM1D2KAH8HOU6cDHL5h1ce";
+const JSONBIN_URL = "https://api.jsonbin.io/v3/b/686a9bbd8960c979a5b81842/latest"; // C'est le NOUVEL ID du bin
+const JSONBIN_API_KEY = "$2a$10$N2Z/S6fvmG9oTVs0Wsi0g.qQhisn.z0y1RuepOk5nnM8YJKDy.Qrm"; // Ta clé API Master
 
 async function getPassword() {
   try {
