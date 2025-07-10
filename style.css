@@ -29,7 +29,7 @@ body {
 
 .hero-text h1 {
   font-size: 3rem;
-  color: rgb(255, 255, 255);
+  color: rgb(241, 241, 241);
   padding: 1rem 2rem;
   border-radius: 12px;
   animation: fadeInUp 1.5s ease;
@@ -38,6 +38,7 @@ body {
 .hero-text p {
   font-size: 1.2rem;
   color: rgb(234, 41, 42);
+  background-color: rgb(42, 222, 236);
 }
 
 
@@ -45,7 +46,7 @@ body {
 .filter-bar {
   position: sticky;
   top: 0;
-  background-color: #0052cc;
+  background-color: rgb(42, 222, 236);
   padding: 10px 5px;
   display: flex;
   justify-content: center;
